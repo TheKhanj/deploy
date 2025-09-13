@@ -6,6 +6,3 @@ RUN pacman -Syu --noconfirm \
 	&& pacman -Scc --noconfirm
 
 WORKDIR /workspace
-
-RUN useradd -m builder && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-USER builder
