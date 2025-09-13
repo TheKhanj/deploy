@@ -33,6 +33,7 @@ if [ -z "$_INC_SSH" ]; then
 
 		if ! [ -d "$(dirname "${known}")" ]; then
 			mkdir -p "$(dirname "${known}")"
+			chmod 700 "$(dirname "${known}")"
 		fi
 
 		if ! [ -f "${known}" ]; then
