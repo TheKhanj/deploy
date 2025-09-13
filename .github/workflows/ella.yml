@@ -21,35 +21,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GH_PAT }}
 
-      - name: Run deploy in container
-        run: |
-          docker run --rm \
-            -v $GITHUB_WORKSPACE:/workspace \
-            -w /workspace \
-            ghcr.io/thekhanj/deploy-arch:latest \
-            sh -c './deploy aur/ella update'
-
-  release-ella-bin:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-
-      - name: Create deploy.json
-        run: printf '%s' "$DEPLOY_CONFIG" > deploy.json
+      - name: Deploy ella in container
+        run: ./docker-deploy arch aur/ella update
         env:
           DEPLOY_CONFIG: ${{ secrets.DEPLOY_CONFIG }}
 
-      - name: Log in to GHCR
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GH_PAT }}
-
-      - name: Run deploy in container
-        run: |
-          docker run --rm \
-            -v $GITHUB_WORKSPACE:/workspace \
-            -w /workspace \
-            ghcr.io/thekhanj/deploy-arch:latest \
-            sh -c './deploy aur/ella update_bin'
+      - name: Deploy ella-bin in container
+        run: ./docker-deploy arch aur/ella update_bin
+        env:
+          DEPLOY_CONFIG: ${{ secrets.DEPLOY_CONFIG }}

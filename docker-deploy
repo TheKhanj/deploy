@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+if [ -z "$GITHUB_WORKSPACE" ]; then
+	WORKSPACE='.'
+else
+	WORKSPACE="$GITHUB_WORKSPACE"
+	echo "$DEPLOY_CONFIG" >"deploy.json"
+fi
+
+DISTRO="$1"
+shift
+echo "./deploy $@"
+
+docker run --rm \
+	-v "${WORKSPACE}":/workspace \
+	-w /workspace \
+	"ghcr.io/thekhanj/deploy-$DISTRO:latest" \
+	./deploy "$@"
