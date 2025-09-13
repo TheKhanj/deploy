@@ -36,6 +36,9 @@ if [ -z "$_INC_SSH" ]; then
 			return 0
 		fi
 
+		if ! [ -d "$(dirname "${known}")" ]; then
+			mkdir -p "$(dirname "${known}")"
+		fi
 		ssh-keyscan "${host}" >>"${known}"
 	}
 
