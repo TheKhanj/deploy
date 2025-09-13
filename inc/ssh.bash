@@ -29,6 +29,14 @@ if [ -z "$_INC_SSH" ]; then
 		local host="$1"
 		local known="${HOME}/.ssh/known_hosts"
 
+		if ! [ -d "$(dirname "${known}")" ]; then
+			mkdir -p "$(dirname "${known}")"
+		fi
+
+		if ! [ -f "${known}" ]; then
+			touch "${known}"
+		fi
+
 		if cat "${known}" |
 			awk '{ print $1 }' |
 			grep "${host}" -q >/dev/null; then
@@ -36,9 +44,6 @@ if [ -z "$_INC_SSH" ]; then
 			return 0
 		fi
 
-		if ! [ -d "$(dirname "${known}")" ]; then
-			mkdir -p "$(dirname "${known}")"
-		fi
 		ssh-keyscan "${host}" >>"${known}"
 	}
 
