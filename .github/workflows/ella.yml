@@ -6,36 +6,46 @@ on:
 jobs:
   release-ella:
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/thekhanj/deploy-arch:latest
-      credentials:
-        username: ${{ github.actor }}
-        password: ${{ secrets.GH_PAT }}
     steps:
       - uses: actions/checkout@v5
 
       - name: Create deploy.json
-        run: printf '%s' "$DEPLOY_CONFIG" > deploy.json
-        env:
-          DEPLOY_CONFIG: ${{ secrets.DEPLOY_CONFIG }}
+        run: echo "${{ secrets.DEPLOY_CONFIG }}" > deploy.json
 
-      - name: Run ella deploy
-        run: ./deploy aur/ella update
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GH_PAT }}
+
+      - name: Run deploy in container
+        run: |
+          docker run --rm \
+            -v $GITHUB_WORKSPACE:/workspace \
+            -w /workspace \
+            ghcr.io/thekhanj/deploy-arch:latest \
+            sh -c './deploy aur/ella update'
 
   release-ella-bin:
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/thekhanj/deploy-arch:latest
-      credentials:
-        username: ${{ github.actor }}
-        password: ${{ secrets.GH_PAT }}
     steps:
       - uses: actions/checkout@v5
 
       - name: Create deploy.json
-        run: printf '%s' "$DEPLOY_CONFIG" > deploy.json
-        env:
-          DEPLOY_CONFIG: ${{ secrets.DEPLOY_CONFIG }}
+        run: echo "${{ secrets.DEPLOY_CONFIG }}" > deploy.json
 
-      - name: Run ella-bin deploy
-        run: ./deploy aur/ella update_bin
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GH_PAT }}
+
+      - name: Run deploy in container
+        run: |
+          docker run --rm \
+            -v $GITHUB_WORKSPACE:/workspace \
+            -w /workspace \
+            ghcr.io/thekhanj/deploy-arch:latest \
+            sh -c './deploy aur/ella update_bin'
