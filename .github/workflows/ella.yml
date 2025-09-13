@@ -1,0 +1,41 @@
+name: Release ella to AUR
+
+on:
+  workflow_dispatch:
+
+jobs:
+  release-ella:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/thekhanj/deploy-arch:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GH_PAT }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Create deploy.json
+        run: printf '%s' "$DEPLOY_CONFIG" > deploy.json
+        env:
+          DEPLOY_CONFIG: ${{ secrets.DEPLOY_CONFIG }}
+
+      - name: Run ella deploy
+        run: ./deploy aur/ella update
+
+  release-ella-bin:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/thekhanj/deploy-arch:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GH_PAT }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Create deploy.json
+        run: printf '%s' "$DEPLOY_CONFIG" > deploy.json
+        env:
+          DEPLOY_CONFIG: ${{ secrets.DEPLOY_CONFIG }}
+
+      - name: Run ella-bin deploy
+        run: ./deploy aur/ella update-bin
