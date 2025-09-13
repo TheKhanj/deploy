@@ -35,6 +35,7 @@ if [ -z "$_INC_SSH" ]; then
 
 		if ! [ -f "${known}" ]; then
 			touch "${known}"
+			chmod 644 "${known}"
 		fi
 
 		if cat "${known}" |
