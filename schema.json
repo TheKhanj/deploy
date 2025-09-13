@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "type": "object",
+  "required": [
+    "ssh"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "ssh": {
+      "type": "object",
+      "required": [
+        "aur"
+      ],
+      "additionalProperties": {
+        "$ref": "#/definitions/SSHKey"
+      }
+    }
+  },
+  "definitions": {
+    "SSHKey": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "privkey",
+        "pubkey"
+      ],
+      "properties": {
+        "privkey": {
+          "type": "string",
+          "description": "SSH private key."
+        },
+        "pubkey": {
+          "type": "string",
+          "description": "SSH public key."
+        }
+      }
+    }
+  }
+}

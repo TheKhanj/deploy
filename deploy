@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+main() {
+	set -e
+
+	export CONFIG="${CONFIG:-deploy.json}"
+	export CACHE="${CACHE:-.cache}"
+
+	. 'inc/common.bash'
+
+	if [ "$#" -ne 2 ]; then
+		_common_log "error: expected two arguments (deploy path and action name)"
+		_common_log
+		help
+		exit 1
+	fi
+
+	file="$1/deploy.bash"
+	action="$2"
+
+	. 'inc/init.bash'
+	_init
+
+	. "${file}"
+	"${action}"
+}
+
+help() {
+	_common_log "Usage:"
+	_common_log "	deploy aur/ella update"
+}
+
+main "$@"
