@@ -14,6 +14,8 @@ if [ -z "$_INC_SSH" ]; then
 		local privkey="$2"
 		local pubkey="$3"
 
+		_common_log "ssh: initializing \"${name}\" key"
+
 		local dir="${CACHE}/ssh/${name}"
 		if ! [ -d "${dir}" ]; then
 			mkdir -p "${dir}"
