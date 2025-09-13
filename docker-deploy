@@ -4,7 +4,7 @@ if [ -z "$GITHUB_WORKSPACE" ]; then
 	WORKSPACE='.'
 else
 	WORKSPACE="$GITHUB_WORKSPACE"
-	echo "$DEPLOY_CONFIG" >"deploy.json"
+	printf "%s" "$DEPLOY_CONFIG" >"deploy.json"
 fi
 
 DISTRO="$1"
