@@ -19,7 +19,6 @@ if [ -z "$_INC_AUR" ]; then
 		echo "ssh: pubkey:"
 		cat "$(dirname $(_aur_get_ssh_key))/key.pub"
 		echo "hosts"
-		echo "$HOME/.ssh/known_hosts"
 		cat "$HOME/.ssh/known_hosts"
 		GIT_SSH_COMMAND="ssh -i $(_aur_get_ssh_key)" \
 			git clone "aur@aur.archlinux.org:${name}" "${dir}"
