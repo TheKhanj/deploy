@@ -38,4 +38,4 @@ jobs:
           DEPLOY_CONFIG: ${{ secrets.DEPLOY_CONFIG }}
 
       - name: Run ella-bin deploy
-        run: ./deploy aur/ella update-bin
+        run: ./deploy aur/ella update_bin
