@@ -1,0 +1,27 @@
+name: Build and Push Docker Images
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GH_PAT }}
+
+      - name: Build Docker image
+        run: |
+          docker build -t ghcr.io/thekhanj/deploy-arch:latest docker/arch
+
+      - name: Push Docker image
+        run: |
+          docker push ghcr.io/thekhanj/deploy-arch:latest
