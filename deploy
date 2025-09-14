@@ -3,8 +3,8 @@
 main() {
 	set -e
 
-	export CONFIG="${CONFIG:-deploy.json}"
-	export CACHE="${CACHE:-.cache}"
+	export CONFIG="${CONFIG:-${PWD}/deploy.json}"
+	export CACHE="${CACHE:-${PWD}/.cache}"
 
 	. 'inc/common.bash'
 
