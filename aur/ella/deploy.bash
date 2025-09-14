@@ -7,9 +7,11 @@ update() {
 	local makefile="${PWD}/aur/ella/Makefile"
 
 	_aur_clean_clone "${name}" "${dir}"
-	cd "${dir}"
 
+	pushd "${dir}"
 	_update "${makefile}"
+	popd
+	_aur_push
 }
 
 update_bin() {
@@ -18,9 +20,11 @@ update_bin() {
 	local makefile="${PWD}/Makefile"
 
 	_aur_clean_clone "${name}" "${dir}"
-	cd "${dir}"
 
+	pushd "${dir}"
 	_update "${makefile}"
+	popd
+	_aur_push
 }
 
 _update() {
@@ -46,7 +50,6 @@ _update() {
 	make -f "${makefile}"
 	git add .
 	git commit -m "deploy-bot: bump up version: ${latest}"
-	_aur_push
 }
 
 _get_latest_version() {
