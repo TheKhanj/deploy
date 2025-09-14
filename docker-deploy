@@ -9,10 +9,9 @@ fi
 
 DISTRO="$1"
 shift
-echo "./deploy $@"
 
 docker run --rm \
 	-v "${WORKSPACE}":/workspace \
 	-w /workspace \
 	"ghcr.io/thekhanj/deploy-$DISTRO:latest" \
-	./deploy "$@"
+	bash -c "sudo chown builder:builder . -R && ./deploy $*"
