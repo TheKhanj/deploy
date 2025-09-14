@@ -15,7 +15,7 @@ update() {
 update_bin() {
 	local name="ella-bin"
 	local dir="$(_aur_get_project_dir "${name}")"
-	local makefile="${PWD}/Makefile"
+	local makefile="${PWD}/aur/ella/Makefile"
 
 	_aur_clean_clone "${name}" "${dir}"
 	cd "${dir}"
