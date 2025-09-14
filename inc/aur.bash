@@ -19,10 +19,15 @@ if [ -z "$_INC_AUR" ]; then
 			git clone "aur@aur.archlinux.org:${name}" "${dir}"
 	}
 
+	_aur_push() {
+		GIT_SSH_COMMAND="ssh -i $(_aur_get_ssh_key)" \
+			git push
+	}
+
 	_aur_get_project_dir() {
 		local name="$1"
 
-		echo ".cache/aur/${name}"
+		echo "${CACHE}/aur/${name}"
 	}
 
 	_aur_get_ssh_key() {

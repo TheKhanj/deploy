@@ -46,7 +46,7 @@ _update() {
 	make -f "${makefile}"
 	git add .
 	git commit -m "deploy-bot: bump up version: ${latest}"
-	git push
+	_aur_push
 }
 
 _get_latest_version() {
